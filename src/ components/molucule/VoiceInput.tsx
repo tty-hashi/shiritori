@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import axios from 'axios'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import { Box, Button, Flex, Stack, Text, keyframes } from '@chakra-ui/react'
+import { Box, Button, Flex, Text, keyframes } from '@chakra-ui/react'
 
 type Props = {
   voiceList: string[]
@@ -11,13 +12,28 @@ const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList }) => {
   const { transcript, finalTranscript, listening, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition()
 
+  // ひらがな化API
+  const gooApiKey = process.env.REACT_APP_GOO_API_KEY
+  const gooApiUrl = 'https://labs.goo.ne.jp/api/hiragana'
+
+  const convertToHiragana = async (word: string) => {
+    if (!gooApiKey || !word) return
+    axios
+      .post(gooApiUrl, {
+        app_id: gooApiKey,
+        sentence: word,
+        output_type: 'hiragana',
+      })
+      .then((res) => {
+        setVoiceList([...voiceList, res.data.converted])
+      })
+  }
+
   useEffect(() => {
     if (finalTranscript === '') return
-    setVoiceList([...voiceList, finalTranscript])
+    convertToHiragana(finalTranscript)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finalTranscript])
-
-  console.log(voiceList)
 
   if (!browserSupportsSpeechRecognition) {
     return <span>ブラウザが音声認識未対応です</span>
@@ -36,6 +52,11 @@ const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList }) => {
 `
 
   const animation = `${animationKeyframes} 2s ease-in-out infinite`
+
+  const resetOnClickHandler = () => {
+    resetTranscript()
+    setVoiceList([])
+  }
 
   return (
     <div id="react-speech-recognition">
@@ -64,10 +85,10 @@ const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList }) => {
 
       <Flex gap={4} justifyContent={'center'} my={8}>
         <Button colorScheme="teal" variant="outline" onClick={() => SpeechRecognition.startListening()}>
-          音声入力開始
+          スタート
         </Button>
-        <Button colorScheme="red" variant="outline" onClick={() => resetTranscript()}>
-          リセット
+        <Button colorScheme="red" variant="outline" onClick={resetOnClickHandler}>
+          さいしょから
         </Button>
       </Flex>
       <Text h={6}>{transcript}</Text>
