@@ -26,6 +26,9 @@ const ShiritoriRoom: React.FC = () => {
         <VoiceInput voiceList={voiceList} setVoiceList={setVoiceList} />
         <InputList list={voiceList} />
       </Box>
+      <a href="http://www.goo.ne.jp/" style={{ width: '100px', display: 'block', margin: '0 auto' }}>
+        <img src="//u.xgoo.jp/img/sgoo.png" alt="supported by goo" title="supported by goo" />
+      </a>
     </>
   )
 }

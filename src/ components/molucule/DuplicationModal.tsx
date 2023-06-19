@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalCloseButton,
-  Button,
-  useDisclosure,
-} from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalCloseButton, Button } from '@chakra-ui/react'
 
 type Props = {
   isOpen: boolean
