@@ -1,5 +1,7 @@
-import { Box, Stack } from '@chakra-ui/react'
 import React from 'react'
+import { Box, Stack } from '@chakra-ui/react'
+import { FiExternalLink } from 'react-icons/fi'
+import { AiFillPicture } from 'react-icons/ai'
 
 type Props = {
   list: string[]
@@ -19,8 +21,19 @@ const InputList: React.FC<Props> = ({ list }) => {
           px={4}
           borderRadius={isEven(index) ? '0 15px 15px 15px' : '15px 0 15px 15px'}
           textAlign={'left'}
+          display={'flex'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
         >
           {item}
+          <Box display={'flex'} gap={4}>
+            <a target="blank" href={`https://ja.wikipedia.org/wiki/${item}`}>
+              <FiExternalLink />
+            </a>
+            <a target="blank" href={`https://www.google.com/search?tbm=isch&q=${item}`}>
+              <AiFillPicture />
+            </a>
+          </Box>
         </Box>
       ))}
     </Stack>
