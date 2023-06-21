@@ -58,6 +58,13 @@ const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList }) => {
     setVoiceList([])
   }
 
+  const prevOnClickHandler = () => {
+    const array = [...voiceList]
+    array.pop()
+    resetTranscript()
+    setVoiceList(array)
+  }
+
   return (
     <div id="react-speech-recognition">
       <Box
@@ -84,11 +91,14 @@ const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList }) => {
       </Box>
 
       <Flex gap={4} justifyContent={'center'} my={8}>
-        <Button colorScheme="teal" variant="outline" onClick={() => SpeechRecognition.startListening()}>
+        <Button colorScheme="teal" variant="solid" onClick={() => SpeechRecognition.startListening()}>
           スタート
         </Button>
         <Button colorScheme="red" variant="outline" onClick={resetOnClickHandler}>
           さいしょから
+        </Button>
+        <Button colorScheme="teal" variant="outline" onClick={prevOnClickHandler}>
+          戻す
         </Button>
       </Flex>
       <Text h={6}>{transcript}</Text>
