@@ -15,6 +15,7 @@
     "@types/react-dom": "^18.2.4",
     "@types/react-icons": "^3.0.0",
     "axios": "^1.4.0",
+    "firebase": "^9.22.2",
     "framer-motion": "^4.1.17",
     "kuromoji": "^0.1.2",
     "react": "^18.2.0",
@@ -62,5 +63,8 @@
     "path-browserify": "^1.0.1",
     "prettier": "^2.8.8",
     "process": "^0.11.10"
+  },
+  "volta": {
+    "node": "18.0.0"
   }
 }

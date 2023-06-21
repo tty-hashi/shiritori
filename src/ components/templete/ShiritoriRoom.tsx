@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Box } from '@chakra-ui/react'
 
 import VoiceInput from '../molucule/VoiceInput'
@@ -9,6 +9,8 @@ const ShiritoriRoom: React.FC = () => {
   const [voiceList, setVoiceList] = useState<string[]>([])
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [prevLastWord, setPrevLastWord] = useState<string>('')
+
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (voiceList.length === 0) return
@@ -31,10 +33,18 @@ const ShiritoriRoom: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voiceList])
 
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
+  }
+  useEffect(() => {
+    scrollToBottom()
+  }, [voiceList])
   return (
     <>
       {isModalOpen && <DuplicationModal isOpen={isModalOpen} setClose={() => setIsModalOpen(false)} />}
-      <Box mx={4} my={16}>
+      <Box mx={4} my={16} ref={chatContainerRef} style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
         <Box textAlign={'center'} position="sticky" top={0} bgColor={'white'}>
           <VoiceInput voiceList={voiceList} setVoiceList={setVoiceList} />
         </Box>
