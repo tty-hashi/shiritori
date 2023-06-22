@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Stack } from '@chakra-ui/react'
+import { Box, Link, Stack } from '@chakra-ui/react'
 import { FiExternalLink } from 'react-icons/fi'
 import { AiFillPicture } from 'react-icons/ai'
 
@@ -27,12 +27,12 @@ const InputList: React.FC<Props> = ({ list }) => {
         >
           {item}
           <Box display={'flex'} gap={4}>
-            <a target="blank" href={`https://ja.wikipedia.org/wiki/${item}`}>
-              <FiExternalLink />
-            </a>
-            <a target="blank" href={`https://www.google.com/search?tbm=isch&q=${item}`}>
-              <AiFillPicture />
-            </a>
+            <Link p={2} target="blank" href={`https://ja.wikipedia.org/wiki/${item}`}>
+              <FiExternalLink size={'2em'} />
+            </Link>
+            <Link p={2} target="blank" href={`https://www.google.com/search?tbm=isch&q=${item}`}>
+              <AiFillPicture size={'2em'} />
+            </Link>
           </Box>
         </Box>
       ))}

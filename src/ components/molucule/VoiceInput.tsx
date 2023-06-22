@@ -6,9 +6,10 @@ import { Box, Button, Flex, Text, keyframes } from '@chakra-ui/react'
 type Props = {
   voiceList: string[]
   setVoiceList: React.Dispatch<React.SetStateAction<string[]>>
+  prevLastWord: string
 }
 
-const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList }) => {
+const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList, prevLastWord }) => {
   const { transcript, finalTranscript, listening, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition()
 
@@ -86,18 +87,26 @@ const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList }) => {
           transition: 'opacity linear 0.4s',
           animation,
         }}
-      >
-        <Text>{listening ? 'on' : 'off'}</Text>
-      </Box>
+      ></Box>
+      {prevLastWord && <Text p={4}>{`次のはじめの文字は、「${prevLastWord}」`}</Text>}
+      {voiceList.length !== 0 && <Text p={4}>{`今は、${voiceList.length + 1}回目`}</Text>}
 
+      <Button
+        colorScheme="teal"
+        variant="solid"
+        w={'80%'}
+        maxW={'300px'}
+        p={8}
+        fontSize={'2xl'}
+        onClick={() => SpeechRecognition.startListening()}
+      >
+        スタート
+      </Button>
       <Flex gap={4} justifyContent={'center'} my={8}>
-        <Button colorScheme="teal" variant="solid" onClick={() => SpeechRecognition.startListening()}>
-          スタート
-        </Button>
-        <Button colorScheme="red" variant="outline" onClick={resetOnClickHandler}>
+        <Button p={8} colorScheme="red" variant="outline" onClick={resetOnClickHandler}>
           さいしょから
         </Button>
-        <Button colorScheme="teal" variant="outline" onClick={prevOnClickHandler}>
+        <Button p={8} colorScheme="teal" variant="outline" onClick={prevOnClickHandler}>
           戻す
         </Button>
       </Flex>

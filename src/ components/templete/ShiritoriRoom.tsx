@@ -46,7 +46,7 @@ const ShiritoriRoom: React.FC = () => {
       {isModalOpen && <DuplicationModal isOpen={isModalOpen} setClose={() => setIsModalOpen(false)} />}
       <Box mx={4} my={16} ref={chatContainerRef} style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'scroll' }}>
         <Box textAlign={'center'} position="sticky" top={0} bgColor={'white'}>
-          <VoiceInput voiceList={voiceList} setVoiceList={setVoiceList} />
+          <VoiceInput voiceList={voiceList} setVoiceList={setVoiceList} prevLastWord={prevLastWord} />
         </Box>
         <InputList list={voiceList} />
       </Box>
