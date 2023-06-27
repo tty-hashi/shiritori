@@ -1,13 +1,15 @@
 import React from 'react'
-import { Box, Link, Stack } from '@chakra-ui/react'
+import { Box, Button, Link, Stack, Text } from '@chakra-ui/react'
 import { FiExternalLink } from 'react-icons/fi'
 import { AiFillPicture } from 'react-icons/ai'
 
 type Props = {
   list: string[]
+  isCheck: boolean
+  setIsCheck: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const InputList: React.FC<Props> = ({ list }) => {
+const InputList: React.FC<Props> = ({ list, setIsCheck, isCheck }) => {
   const isEven = (num: number) => (num % 2 === 0 ? true : false)
   return (
     <Stack maxW={700} mx={'auto'} my={8} gap={6}>
@@ -15,7 +17,7 @@ const InputList: React.FC<Props> = ({ list }) => {
         <Box
           key={item}
           bg={isEven(index) ? 'red.100' : 'green.100'}
-          w={'60%'}
+          w={'70%'}
           ml={!isEven(index) ? 'auto' : 0}
           py={2}
           px={4}
@@ -36,6 +38,9 @@ const InputList: React.FC<Props> = ({ list }) => {
           </Box>
         </Box>
       ))}
+      <Button maxW={'300px'} margin={'auto'} onClick={() => setIsCheck((prev) => !prev)}>
+        {isCheck ? 'もどる' : 'かくにんする'}
+      </Button>
     </Stack>
   )
 }

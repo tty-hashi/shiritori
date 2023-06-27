@@ -7,9 +7,10 @@ type Props = {
   voiceList: string[]
   setVoiceList: React.Dispatch<React.SetStateAction<string[]>>
   prevLastWord: string
+  isCheck: boolean
 }
 
-const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList, prevLastWord }) => {
+const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList, prevLastWord, isCheck }) => {
   const { transcript, finalTranscript, listening, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition()
 
@@ -67,27 +68,7 @@ const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList, prevLastWord }) 
   }
 
   return (
-    <div id="react-speech-recognition">
-      <Box
-        w={10}
-        h={10}
-        mx={'auto'}
-        position={'relative'}
-        transition={'cubic-bezier(0.215, 0.61, 0.355, 1) .4s'}
-        _after={{
-          display: listening ? 'block' : 'none',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '100%',
-          height: '100%',
-          borderRadius: '50%',
-          content: '""',
-          transition: 'opacity linear 0.4s',
-          animation,
-        }}
-      ></Box>
+    <div id="react-speech-recognition" style={{ display: isCheck ? 'none' : 'block' }}>
       {prevLastWord && <Text p={4}>{`次のはじめの文字は、「${prevLastWord}」`}</Text>}
       {voiceList.length !== 0 && <Text p={4}>{`今は、${voiceList.length + 1}回目`}</Text>}
 
@@ -99,6 +80,21 @@ const VoiceInput: React.FC<Props> = ({ voiceList, setVoiceList, prevLastWord }) 
         p={8}
         fontSize={'2xl'}
         onClick={() => SpeechRecognition.startListening()}
+        position={'relative'}
+        transition={'cubic-bezier(0.215, 0.61, 0.355, 1) .4s'}
+        _after={{
+          display: listening ? 'block' : 'none',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 4,
+          height: 4,
+          borderRadius: '50%',
+          content: '""',
+          transition: 'opacity linear 0.4s',
+          animation,
+        }}
       >
         スタート
       </Button>
